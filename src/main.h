@@ -9,9 +9,16 @@ struct tickless {
 
 #define toGColor8(c) (GColor8 ){ .argb = (c) }
 
-static void init (void);
-static void cleanup (void);
-static void tick (struct tm *, TimeUnits);
-static void update_time (void);
+static void
+init (void);
+
+static void
+cleanup (void);
+
+static void
+tick (struct tm *, TimeUnits);
+
+static void
+update_time (void);
 
 // vim: set ts=4 sw=4 et:

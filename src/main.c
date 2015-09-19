@@ -8,14 +8,16 @@ static struct tickless state = {
     .b_fg = 0
 };
 
-signed main (void) {
+signed
+main (void) {
 
     init();
     app_event_loop();
     cleanup();
 }
 
-void init (void) {
+void
+init (void) {
 
     state.w = window_create();
     window_set_background_color(state.w, toGColor8(state.bg));
@@ -39,18 +41,21 @@ void init (void) {
     update_time();
 }
 
-void cleanup (void) {
+void
+cleanup (void) {
 
     text_layer_destroy(state.t);
     window_destroy(state.w);
 }
 
-void tick (struct tm * ticks, TimeUnits deltat) {
+void
+tick (struct tm * ticks, TimeUnits deltat) {
 
     update_time();
 }
 
-void update_time (void) {
+void
+update_time (void) {
 
     time_t tmp = time(NULL);
     struct tm * ticks = localtime(&tmp);
