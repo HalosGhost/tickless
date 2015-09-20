@@ -30,7 +30,7 @@ init (void) {
     text_layer_set_text_alignment(state.t, GTextAlignmentCenter);
     layer_add_child(window_get_root_layer(state.w), text_layer_get_layer(state.t));
 
-    state.d = text_layer_create(GRect(0, 60, 144, 100));
+    state.d = text_layer_create(GRect(0, 80, 144, 120));
     text_layer_set_background_color(state.d, toGColor8(GColorClearARGB8));
     text_layer_set_text_color(state.d, toGColor8(state.d_fg));
     text_layer_set_font(state.d, fonts_get_system_font(FONT_KEY_BITHAM_30_BLACK));
