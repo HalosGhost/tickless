@@ -67,7 +67,7 @@ update_time (void) {
 
     const char * dt_fmt = "%a, %d %b %Y";
     static char dte [17];
-    striftime(dte, 17, dt_fmt, ticks);
+    strftime(dte, 17, dt_fmt, ticks);
     text_layer_set_text(state.d, dte);
 }
 
