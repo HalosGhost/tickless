@@ -4,6 +4,7 @@ struct tickless {
     Window * w;
     TextLayer * t, * d;
     struct GRect * b;
+    char * t_fn, * d_fn;
     uint8_t bg, t_fg, d_fg, b_fg;
 };
 
@@ -11,6 +12,9 @@ struct tickless {
 
 static void
 init (void);
+
+void
+init_text (TextLayer **, uint8_t, GRect, const char *) {
 
 static void
 cleanup (void);

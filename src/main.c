@@ -2,6 +2,8 @@
 
 static struct tickless state = {
     .w = 0, .t = 0, .d = 0, .b = 0,
+    .t_fn = FONT_KEY_BITHAM_42_BOLD,
+    .d_fn = FONT_KEY_BITHAM_30_BLACK,
     .bg   = GColorBlackARGB8,
     .t_fg = GColorWhiteARGB8,
     .d_fg = GColorWhiteARGB8,
@@ -11,9 +13,7 @@ static struct tickless state = {
 signed
 main (void) {
 
-    init();
-    app_event_loop();
-    cleanup();
+    init(); update_time(); app_event_loop(); cleanup();
 }
 
 void
@@ -23,22 +23,21 @@ init (void) {
     window_set_background_color(state.w, toGColor8(state.bg));
     window_stack_push(state.w, true);
 
-    state.t = text_layer_create(GRect(0, 20, 144, 60));
-    text_layer_set_background_color(state.t, toGColor8(GColorClearARGB8));
-    text_layer_set_text_color(state.t, toGColor8(state.t_fg));
-    text_layer_set_font(state.t, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
-    text_layer_set_text_alignment(state.t, GTextAlignmentCenter);
-    layer_add_child(window_get_root_layer(state.w), text_layer_get_layer(state.t));
-
-    state.d = text_layer_create(GRect(0, 80, 144, 120));
-    text_layer_set_background_color(state.d, toGColor8(GColorClearARGB8));
-    text_layer_set_text_color(state.d, toGColor8(state.d_fg));
-    text_layer_set_font(state.d, fonts_get_system_font(FONT_KEY_BITHAM_30_BLACK));
-    text_layer_set_text_alignment(state.d, GTextAlignmentCenter);
-    layer_add_child(window_get_root_layer(state.w), text_layer_get_layer(state.d));
+    init_text(&state.t, state.t_fg, GRect(0, 20, 144, 60 ), state.t_fn);
+    init_text(&state.d, state.d_fg, GRect(0, 80, 144, 120), state.d_fn);
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
-    update_time();
+}
+
+void
+init_text (TextLayer ** t, uint8_t fg, GRect r, const char * f) {
+
+    *t = text_layer_create(r);
+    text_layer_set_background_color(*t, toGColor8(GColorClearARGB8));
+    text_layer_set_text_color(*t, toGColor8(fg));
+    text_layer_set_font(*t, fonts_get_system_font(f));
+    text_layer_set_text_alignment(*t, GTextAlignmentCenter);
+    layer_add_child(window_get_root_layer(state.w), text_layer_get_layer(*t));
 }
 
 void
