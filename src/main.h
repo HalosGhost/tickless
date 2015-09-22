@@ -13,8 +13,8 @@ struct tickless {
 static void
 init (void);
 
-void
-init_text (TextLayer **, uint8_t, GRect, const char *) {
+static void
+init_text (TextLayer **, uint8_t, GRect, const char *);
 
 static void
 cleanup (void);
