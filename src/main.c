@@ -7,7 +7,7 @@ static struct tickless state = {
     .bg   = GColorBlackARGB8,
     .t_fg = GColorWhiteARGB8,
     .d_fg = GColorWhiteARGB8,
-    .b_fg = 0
+    .b_fg = GColorWhiteARGB8
 };
 
 signed
