@@ -1,14 +1,17 @@
 #include "main.h"
 
 static struct tickless state = {
-    .w = 0, .t = 0, .d = 0, .b = 0,
-    .t_fn = FONT_KEY_BITHAM_42_BOLD,
-    .d_fn = FONT_KEY_BITHAM_30_BLACK,
-    .bg   = GColorBlackARGB8,
-    .t_fg = GColorWhiteARGB8,
-    .d_fg = GColorWhiteARGB8,
-    .b_fg = GColorWhiteARGB8
+    .w = 0, .t = 0, .d = 0, .y = 0, //.b = 0,
+    .t_fn = FONT_KEY_LECO_36_BOLD_NUMBERS,
+    .d_fn = FONT_KEY_GOTHIC_28_BOLD,
+    .y_fn = FONT_KEY_LECO_20_BOLD_NUMBERS,
+    .bg   = GColorTiffanyBlueARGB8, .fg = GColorWhiteARGB8,
 };
+
+static char str_buffer [24] = "";
+static char * tm_fmt = "";
+static time_t tmp = 0;
+static struct tm * ticks = 0;
 
 signed
 main (void) {
@@ -23,18 +26,23 @@ init (void) {
     window_set_background_color(state.w, toGColor8(state.bg));
     window_stack_push(state.w, true);
 
-    init_text(&state.t, state.t_fg, GRect(0, 20, 144, 60 ), state.t_fn);
-    init_text(&state.d, state.d_fg, GRect(0, 80, 144, 120), state.d_fn);
+    init_text(&state.t, GRect(0, 40,  144, 60 ), state.t_fn);
+    init_text(&state.d, GRect(0, 80,  144, 108), state.d_fn);
+    init_text(&state.y, GRect(0, 108, 144, 120), state.y_fn);
+
+    // state.b = bitmap_layer_create(GRect(0, 60, 144, 80));
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
+
+    tm_fmt = clock_is_24h_style() ? "%H.%M|%a %d %b|%Y" : "%I.%M|%a %d %b|%Y";
 }
 
 void
-init_text (TextLayer ** t, uint8_t fg, GRect r, const char * f) {
+init_text (TextLayer ** t, GRect r, const char * f) {
 
     *t = text_layer_create(r);
     text_layer_set_background_color(*t, toGColor8(GColorClearARGB8));
-    text_layer_set_text_color(*t, toGColor8(fg));
+    text_layer_set_text_color(*t, toGColor8(state.fg));
     text_layer_set_font(*t, fonts_get_system_font(f));
     text_layer_set_text_alignment(*t, GTextAlignmentCenter);
     layer_add_child(window_get_root_layer(state.w), text_layer_get_layer(*t));
@@ -43,8 +51,11 @@ init_text (TextLayer ** t, uint8_t fg, GRect r, const char * f) {
 void
 cleanup (void) {
 
+    tick_timer_service_unsubscribe();
+    //bitmap_layer_destroy(state.b);
     text_layer_destroy(state.t);
     text_layer_destroy(state.d);
+    text_layer_destroy(state.y);
     window_destroy(state.w);
 }
 
@@ -57,17 +68,14 @@ tick (struct tm * ticks, TimeUnits deltat) {
 void
 update_time (void) {
 
-    time_t tmp = time(NULL);
-    struct tm * ticks = localtime(&tmp);
-    const char * hr_fmt = clock_is_24h_style() ? "%H.%M" : "%I:%M";
-    static char hrs [6];
-    strftime(hrs, 6, hr_fmt, ticks);
-    text_layer_set_text(state.t, hrs);
-
-    const char * dt_fmt = "%a, %d %b %Y";
-    static char dte [17];
-    strftime(dte, 17, dt_fmt, ticks);
-    text_layer_set_text(state.d, dte);
+    tmp = time(NULL);
+    ticks = localtime(&tmp);
+    strftime(str_buffer, 23, tm_fmt, ticks);
+    str_buffer[5] = '\0';
+    str_buffer[16] = '\0';
+    text_layer_set_text(state.t, str_buffer);
+    text_layer_set_text(state.d, str_buffer+6);
+    text_layer_set_text(state.y, str_buffer+17);
 }
 
 // vim: set ts=4 sw=4 et:

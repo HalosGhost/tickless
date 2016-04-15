@@ -2,10 +2,10 @@
 
 struct tickless {
     Window * w;
-    TextLayer * t, * d;
-    struct GRect * b;
-    char * t_fn, * d_fn;
-    uint8_t bg, t_fg, d_fg, b_fg;
+    TextLayer * t, * d, * y;
+    //BitmapLayer * b;
+    char * t_fn, * d_fn, * y_fn;
+    uint8_t bg, fg;
 };
 
 #define toGColor8(c) (GColor8 ){ .argb = (c) }
@@ -14,7 +14,7 @@ static void
 init (void);
 
 static void
-init_text (TextLayer **, uint8_t, GRect, const char *);
+init_text (TextLayer **, GRect, const char *);
 
 static void
 cleanup (void);
