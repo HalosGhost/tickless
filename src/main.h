@@ -12,7 +12,8 @@ static struct tickless {
     .d_fn = FONT_KEY_GOTHIC_28_BOLD,
     .y_fn = FONT_KEY_LECO_20_BOLD_NUMBERS,
     .z_fn = FONT_KEY_GOTHIC_24_BOLD,
-    .bg   = GColorTiffanyBlueARGB8, .fg = GColorWhiteARGB8,
+    .bg   = PBL_IF_COLOR_ELSE(GColorTiffanyBlueARGB8, GColorBlackARGB8),
+    .fg   = GColorWhiteARGB8,
 };
 
 static char str_buffer [7] = "";
