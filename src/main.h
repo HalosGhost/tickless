@@ -11,7 +11,7 @@ static struct tickless {
     .t_fn = FONT_KEY_LECO_36_BOLD_NUMBERS,
     .d_fn = FONT_KEY_GOTHIC_28_BOLD,
     .y_fn = FONT_KEY_LECO_20_BOLD_NUMBERS,
-    .z_fn = FONT_KEY_GOTHING_24_BOLD,
+    .z_fn = FONT_KEY_GOTHIC_24_BOLD,
     .bg   = GColorTiffanyBlueARGB8, .fg = GColorWhiteARGB8,
 };
 
