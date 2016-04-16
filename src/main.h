@@ -15,7 +15,7 @@ static struct tickless {
 };
 
 static char str_buffer [18] = "";
-static char * tm_fmt = "";
+static char tm_fmt [] = "%H.%M|%a %d %b";
 static time_t tmp = 0;
 static struct tm * ticks = 0;
 

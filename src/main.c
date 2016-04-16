@@ -28,7 +28,7 @@ init (void) {
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
 
-    tm_fmt = clock_is_24h_style() ? "%H.%M|%a %d %b" : "%I.%M|%a %d %b";
+    tm_fmt[1] += !clock_is_24h_style();
     update_time();
 }
 
