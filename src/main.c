@@ -65,7 +65,7 @@ update_time (void) {
 
     tmp = time(NULL);
     ticks = localtime(&tmp);
-    strftime(str_buffer, 16, tm_fmt, ticks);
+    strftime(str_buffer, 17, tm_fmt, ticks);
     str_buffer[5] = '\0';
     text_layer_set_text(state.t, str_buffer);
     text_layer_set_text(state.d, str_buffer+6);

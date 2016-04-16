@@ -14,7 +14,7 @@ static struct tickless {
     .bg   = GColorTiffanyBlueARGB8, .fg = GColorWhiteARGB8,
 };
 
-static char str_buffer [17] = "";
+static char str_buffer [18] = "";
 static char * tm_fmt = "";
 static time_t tmp = 0;
 static struct tm * ticks = 0;
