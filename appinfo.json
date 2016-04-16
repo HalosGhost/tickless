@@ -12,7 +12,9 @@
     "sdkVersion": "3",
     "shortName": "Tickless",
     "targetPlatforms": [
-        "basalt"
+        "aplite",
+        "basalt",
+        "chalk"
     ],
     "uuid": "14f04266-d45c-4863-abb2-3a74462a17a0",
     "versionLabel": "1.0",
