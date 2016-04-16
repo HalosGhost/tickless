@@ -25,10 +25,20 @@ init (void) {
     window_set_background_color(state.w, toGColor8(state.bg));
     window_stack_push(state.w, true);
 
-    init_text(&state.z, GRect(0, 20,  144, 40 ), state.z_fn);
-    init_text(&state.t, GRect(0, 40,  144, 60 ), state.t_fn);
-    init_text(&state.d, GRect(0, 80,  144, 108), state.d_fn);
-    init_text(&state.y, GRect(0, 108, 144, 120), state.y_fn);
+    Layer * rt_layer = window_get_root_layer(state.w);
+    GRect rt_bounds = layer_get_bounds(rt_layer),
+          tz_bounds, tm_bounds, dt_bounds, yr_bounds;
+
+    tz_bounds = tm_bounds = dt_bounds = yr_bounds = rt_bounds;
+    tz_bounds.origin.y = rt_bounds.size.h / 8;
+    tm_bounds.origin.y = rt_bounds.size.h / 4;
+    dt_bounds.origin.y = rt_bounds.size.h / 2;
+    yr_bounds.origin.y = rt_bounds.size.h - rt_bounds.size.h / 3;
+
+    init_text(&state.z, tz_bounds, state.z_fn);
+    init_text(&state.t, tm_bounds, state.t_fn);
+    init_text(&state.d, dt_bounds, state.d_fn);
+    init_text(&state.y, yr_bounds, state.y_fn);
 
     //state.b = bitmap_layer_create(GRect(0, 60, 144, 80));
 
