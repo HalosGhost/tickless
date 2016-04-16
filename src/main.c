@@ -3,7 +3,14 @@
 signed
 main (void) {
 
-    init(); update_time(); app_event_loop(); cleanup();
+    init();
+
+    char yr [6] = "";
+    strftime(yr, 5, "%Y", ticks);
+    text_layer_set_text(state.y, yr);
+
+    app_event_loop();
+    cleanup();
 }
 
 void
@@ -17,11 +24,12 @@ init (void) {
     init_text(&state.d, GRect(0, 80,  144, 108), state.d_fn);
     init_text(&state.y, GRect(0, 108, 144, 120), state.y_fn);
 
-    // state.b = bitmap_layer_create(GRect(0, 60, 144, 80));
+    //state.b = bitmap_layer_create(GRect(0, 60, 144, 80));
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
 
-    tm_fmt = clock_is_24h_style() ? "%H.%M|%a %d %b|%Y" : "%I.%M|%a %d %b|%Y";
+    tm_fmt = clock_is_24h_style() ? "%H.%M|%a %d %b" : "%I.%M|%a %d %b";
+    update_time();
 }
 
 void
@@ -57,12 +65,10 @@ update_time (void) {
 
     tmp = time(NULL);
     ticks = localtime(&tmp);
-    strftime(str_buffer, 23, tm_fmt, ticks);
+    strftime(str_buffer, 16, tm_fmt, ticks);
     str_buffer[5] = '\0';
-    str_buffer[16] = '\0';
     text_layer_set_text(state.t, str_buffer);
     text_layer_set_text(state.d, str_buffer+6);
-    text_layer_set_text(state.y, str_buffer+17);
 }
 
 // vim: set ts=4 sw=4 et:
