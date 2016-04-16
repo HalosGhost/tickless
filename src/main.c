@@ -1,18 +1,5 @@
 #include "main.h"
 
-static struct tickless state = {
-    .w = 0, .t = 0, .d = 0, .y = 0, //.b = 0,
-    .t_fn = FONT_KEY_LECO_36_BOLD_NUMBERS,
-    .d_fn = FONT_KEY_GOTHIC_28_BOLD,
-    .y_fn = FONT_KEY_LECO_20_BOLD_NUMBERS,
-    .bg   = GColorTiffanyBlueARGB8, .fg = GColorWhiteARGB8,
-};
-
-static char str_buffer [24] = "";
-static char * tm_fmt = "";
-static time_t tmp = 0;
-static struct tm * ticks = 0;
-
 signed
 main (void) {
 
