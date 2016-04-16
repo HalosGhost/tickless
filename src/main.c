@@ -5,9 +5,14 @@ main (void) {
 
     init();
 
-    char yr [6] = "";
-    strftime(yr, 5, "%Y", ticks);
-    text_layer_set_text(state.y, yr);
+    char long_times [23] = "";
+    strftime(long_times, 22, "%Y|%a %d %b|(%Z)", ticks);
+    long_times[4] = '\0';
+    long_times[15] = '\0';
+
+    text_layer_set_text(state.y, long_times);
+    text_layer_set_text(state.d, long_times+5);
+    text_layer_set_text(state.z, long_times+16);
 
     app_event_loop();
     cleanup();
@@ -20,6 +25,7 @@ init (void) {
     window_set_background_color(state.w, toGColor8(state.bg));
     window_stack_push(state.w, true);
 
+    init_text(&state.z, GRect(0, 20,  144, 40 ), state.z_fn);
     init_text(&state.t, GRect(0, 40,  144, 60 ), state.t_fn);
     init_text(&state.d, GRect(0, 80,  144, 108), state.d_fn);
     init_text(&state.y, GRect(0, 108, 144, 120), state.y_fn);
@@ -48,6 +54,7 @@ cleanup (void) {
 
     tick_timer_service_unsubscribe();
     //bitmap_layer_destroy(state.b);
+    text_layer_destroy(state.z);
     text_layer_destroy(state.t);
     text_layer_destroy(state.d);
     text_layer_destroy(state.y);
@@ -65,10 +72,8 @@ update_time (void) {
 
     tmp = time(NULL);
     ticks = localtime(&tmp);
-    strftime(str_buffer, 17, tm_fmt, ticks);
-    str_buffer[5] = '\0';
+    strftime(str_buffer, 6, tm_fmt, ticks);
     text_layer_set_text(state.t, str_buffer);
-    text_layer_set_text(state.d, str_buffer+6);
 }
 
 // vim: set ts=4 sw=4 et:
