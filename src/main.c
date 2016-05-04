@@ -5,14 +5,12 @@ main (void) {
 
     init();
 
-    char long_times [23] = "";
-    strftime(long_times, 22, "%Y|%a %d %b|(%Z)", ticks);
+    char long_times [12] = "";
+    strftime(long_times, 11, "%Y|(%Z)", ticks);
     long_times[4] = '\0';
-    long_times[15] = '\0';
 
     text_layer_set_text(state.y, long_times);
-    text_layer_set_text(state.d, long_times+5);
-    text_layer_set_text(state.z, long_times+16);
+    text_layer_set_text(state.z, long_times+5);
 
     app_event_loop();
     cleanup();
@@ -82,8 +80,10 @@ update_time (void) {
 
     tmp = time(NULL);
     ticks = localtime(&tmp);
-    strftime(str_buffer, 6, tm_fmt, ticks);
+    strftime(str_buffer, 17, tm_fmt, ticks);
+    str_buffer[5] = '\0';
     text_layer_set_text(state.t, str_buffer);
+    text_layer_set_text(state.d, str_buffer+6);
 }
 
 // vim: set ts=4 sw=4 et:
