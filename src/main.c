@@ -43,7 +43,7 @@ init (void) {
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
 
     tm_fmt[1] += !clock_is_24h_style();
-    tick();
+    tick(NULL, 0);
 }
 
 void
