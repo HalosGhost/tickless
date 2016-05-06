@@ -43,7 +43,6 @@ init (void) {
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
 
     tm_fmt[1] += !clock_is_24h_style();
-    tick(NULL, 0);
 }
 
 void
@@ -72,10 +71,8 @@ cleanup (void) {
 void
 tick (struct tm * ticks, TimeUnits deltat) {
 
-    (void )ticks; (void )deltat;
+    (void )deltat;
 
-    tmp = time(NULL);
-    ticks = localtime(&tmp);
     strftime(str_buffer, 17, tm_fmt, ticks);
     str_buffer[5] = '\0';
     text_layer_set_text(state.t, str_buffer);
