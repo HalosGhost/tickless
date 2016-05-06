@@ -6,7 +6,7 @@ main (void) {
     init();
 
     time_t tmp = time(NULL);
-    struct tm * fst_tick = localtime(tmp);
+    struct tm * fst_tick = localtime(&tmp);
 
     char long_times [12] = "";
     strftime(long_times, 11, "%Y|(%Z)", fst_tick);
