@@ -35,7 +35,4 @@ cleanup (void);
 static void
 tick (struct tm *, TimeUnits);
 
-static void
-update_time (void);
-
 // vim: set ts=4 sw=4 et:
