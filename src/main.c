@@ -5,8 +5,11 @@ main (void) {
 
     init();
 
+    time_t tmp = time(NULL);
+    struct tm * fst_tick = localtime(tmp);
+
     char long_times [12] = "";
-    strftime(long_times, 11, "%Y|(%Z)", ticks);
+    strftime(long_times, 11, "%Y|(%Z)", fst_tick);
     long_times[4] = '\0';
 
     text_layer_set_text(state.y, long_times);
