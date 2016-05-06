@@ -15,6 +15,8 @@ main (void) {
     text_layer_set_text(state.y, long_times);
     text_layer_set_text(state.z, long_times+5);
 
+    tick(fst_tick, 0);
+
     app_event_loop();
     cleanup();
 }
