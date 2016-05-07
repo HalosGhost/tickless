@@ -30,22 +30,25 @@ init (void) {
 
     Layer * rt_layer = window_get_root_layer(state.w);
     GRect rt_bounds = layer_get_bounds(rt_layer),
-          tz_bounds, tm_bounds, dt_bounds, yr_bounds;
+          tz_bounds, tm_bounds, dt_bounds, yr_bounds, bt_bounds;
 
-    tz_bounds = tm_bounds = dt_bounds = yr_bounds = rt_bounds;
+    tz_bounds = tm_bounds = dt_bounds = yr_bounds = bt_bounds = rt_bounds;
     tz_bounds.origin.y = rt_bounds.size.h / 8;
     tm_bounds.origin.y = rt_bounds.size.h / 4;
     dt_bounds.origin.y = rt_bounds.size.h / 2;
     yr_bounds.origin.y = rt_bounds.size.h - rt_bounds.size.h / 3;
+    bt_bounds.origin.y = rt_bounds.size.h / 2 - 1;
+    bt_bounds.size.h   = 2;
 
     init_text(&state.z, tz_bounds, state.z_fn);
     init_text(&state.t, tm_bounds, state.t_fn);
     init_text(&state.d, dt_bounds, state.d_fn);
     init_text(&state.y, yr_bounds, state.y_fn);
 
-    //state.b = bitmap_layer_create(GRect(0, 60, 144, 80));
+    state.b = bitmap_layer_create(bt_bounds);
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
+    battery_state_service_subscribe(batt_update);
 
     tm_fmt[1] += !clock_is_24h_style();
 }
@@ -65,7 +68,8 @@ void
 cleanup (void) {
 
     tick_timer_service_unsubscribe();
-    //bitmap_layer_destroy(state.b);
+    battery_state_service_unsubscribe();
+    bitmap_layer_destroy(state.b);
     text_layer_destroy(state.z);
     text_layer_destroy(state.t);
     text_layer_destroy(state.d);
@@ -82,6 +86,12 @@ tick (struct tm * ticks, TimeUnits deltat) {
     str_buffer[5] = '\0';
     text_layer_set_text(state.t, str_buffer);
     text_layer_set_text(state.d, str_buffer+6);
+}
+
+static void
+batt_update (BatteryChargeState batt_state) {
+
+    (void )batt_state;
 }
 
 // vim: set ts=4 sw=4 et:

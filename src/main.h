@@ -3,11 +3,11 @@
 static struct tickless {
     Window * w;
     TextLayer * t, * d, * y, * z;
-    //BitmapLayer * b;
+    BitmapLayer * b;
     char * t_fn, * d_fn, * y_fn, * z_fn;
     uint8_t bg, fg;
 } state = {
-    .w = 0, .t = 0, .d = 0, .y = 0, .z = 0, //.b = 0,
+    .w = 0, .t = 0, .d = 0, .y = 0, .z = 0, .b = 0,
     .t_fn = FONT_KEY_LECO_36_BOLD_NUMBERS,
     .d_fn = FONT_KEY_GOTHIC_28_BOLD,
     .y_fn = FONT_KEY_LECO_20_BOLD_NUMBERS,
@@ -32,5 +32,8 @@ cleanup (void);
 
 static void
 tick (struct tm *, TimeUnits);
+
+static void
+batt_update (BatteryChargeState);
 
 // vim: set ts=4 sw=4 et:
