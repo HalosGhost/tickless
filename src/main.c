@@ -45,7 +45,8 @@ init (void) {
     init_text(&state.d, dt_bounds, state.d_fn);
     init_text(&state.y, yr_bounds, state.y_fn);
 
-    state.b = bitmap_layer_create(bt_bounds);
+    state.b = layer_create(bt_bounds);
+    layer_set_update_proc(state.b, batt_bar_update);
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
     battery_state_service_subscribe(batt_update);
@@ -69,7 +70,7 @@ cleanup (void) {
 
     tick_timer_service_unsubscribe();
     battery_state_service_unsubscribe();
-    bitmap_layer_destroy(state.b);
+    layer_destroy(state.b);
     text_layer_destroy(state.z);
     text_layer_destroy(state.t);
     text_layer_destroy(state.d);
@@ -88,10 +89,15 @@ tick (struct tm * ticks, TimeUnits deltat) {
     text_layer_set_text(state.d, str_buffer+6);
 }
 
-static void
+void
 batt_update (BatteryChargeState batt_state) {
 
     (void )batt_state;
+}
+
+void
+batt_bar_update (Layer * l, GContext *) {
+
 }
 
 // vim: set ts=4 sw=4 et:

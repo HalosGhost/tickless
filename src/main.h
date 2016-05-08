@@ -3,7 +3,7 @@
 static struct tickless {
     Window * w;
     TextLayer * t, * d, * y, * z;
-    BitmapLayer * b;
+    Layer * b;
     char * t_fn, * d_fn, * y_fn, * z_fn;
     uint8_t bg, fg;
 } state = {
@@ -35,5 +35,8 @@ tick (struct tm *, TimeUnits);
 
 static void
 batt_update (BatteryChargeState);
+
+static void
+batt_bar_update (Layer *, GContext *);
 
 // vim: set ts=4 sw=4 et:
