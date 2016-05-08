@@ -5,7 +5,7 @@ static struct tickless {
     TextLayer * t, * d, * y, * z;
     Layer * b;
     char * t_fn, * d_fn, * y_fn, * z_fn;
-    uint8_t bg, fg;
+    uint8_t bg, fg, btlv;
 } state = {
     .w = 0, .t = 0, .d = 0, .y = 0, .z = 0, .b = 0,
     .t_fn = FONT_KEY_LECO_36_BOLD_NUMBERS,
@@ -14,6 +14,7 @@ static struct tickless {
     .z_fn = FONT_KEY_GOTHIC_24_BOLD,
     .bg   = PBL_IF_COLOR_ELSE(GColorTiffanyBlueARGB8, GColorBlackARGB8),
     .fg   = GColorWhiteARGB8,
+    .btlv = 100,
 };
 
 static char str_buffer [18] = "";

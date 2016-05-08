@@ -92,7 +92,7 @@ tick (struct tm * ticks, TimeUnits deltat) {
 void
 batt_update (BatteryChargeState batt_state) {
 
-    (void )batt_state;
+    state.btlv = batt_state.charge_percent;
 }
 
 void
