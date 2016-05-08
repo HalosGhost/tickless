@@ -98,7 +98,7 @@ batt_update (BatteryChargeState batt_state) {
 }
 
 void
-batt_bar_update (Layer * l, GContext *) {
+batt_bar_update (Layer * l, GContext * ctx) {
 
     GRect b = layer_get_bounds(l);
     b.origin.y++;
