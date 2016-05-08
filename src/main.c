@@ -38,7 +38,7 @@ init (void) {
     dt_bounds.origin.y = rt_bounds.size.h / 2;
     yr_bounds.origin.y = rt_bounds.size.h - rt_bounds.size.h / 3;
     bt_bounds.origin.y = rt_bounds.size.h / 2 - 1;
-    bt_bounds.size.h   = 2;
+    bt_bounds.size.h   = 3;
 
     init_text(&state.z, tz_bounds, state.z_fn);
     init_text(&state.t, tm_bounds, state.t_fn);
@@ -50,6 +50,7 @@ init (void) {
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
     battery_state_service_subscribe(batt_update);
+    layer_mark_dirty(state.b);
 
     tm_fmt[1] += !clock_is_24h_style();
 }
@@ -93,11 +94,17 @@ void
 batt_update (BatteryChargeState batt_state) {
 
     state.btlv = batt_state.charge_percent;
+    layer_mark_dirty(state.b);
 }
 
 void
 batt_bar_update (Layer * l, GContext *) {
 
+    GRect b = layer_get_bounds(l);
+    b.origin.y++;
+    graphics_context_set_stroke_color(ctx, GColorWhite);
+    GPoint endpoint = GPoint(b.origin.x + state.btlv * b.size.w, b.origin.y);
+    graphics_draw_line(ctx, b.origin, endpoint);
 }
 
 // vim: set ts=4 sw=4 et:
