@@ -38,7 +38,7 @@ init (void) {
     dt_bounds.origin.y = rt_bounds.size.h / 2;
     yr_bounds.origin.y = rt_bounds.size.h - rt_bounds.size.h / 3;
     bt_bounds.origin.y = rt_bounds.size.h / 2 - 1;
-    bt_bounds.size.h   = 3;
+    bt_bounds.size.h   = 8;
 
     init_text(&state.z, tz_bounds, state.z_fn);
     init_text(&state.t, tm_bounds, state.t_fn);
@@ -100,11 +100,7 @@ batt_update (BatteryChargeState batt_state) {
 void
 batt_bar_update (Layer * l, GContext * ctx) {
 
-    GRect b = layer_get_bounds(l);
-    b.origin.y++;
-    graphics_context_set_stroke_color(ctx, GColorWhite);
-    GPoint endpoint = GPoint(b.origin.x + state.btlv * b.size.w, b.origin.y);
-    graphics_draw_line(ctx, b.origin, endpoint);
+    graphics_fill_rect(ctx, layer_get_bounds(l), 0, GCornerNone);
 }
 
 // vim: set ts=4 sw=4 et:
