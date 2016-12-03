@@ -35,10 +35,9 @@ init (void) {
     tz_bounds = tm_bounds = dt_bounds = yr_bounds = bt_bounds = rt_bounds;
     tz_bounds.origin.y = rt_bounds.size.h / 8;
     tm_bounds.origin.y = rt_bounds.size.h / 4;
-    dt_bounds.origin.y = rt_bounds.size.h / 2;
+    dt_bounds.origin.y = bt_bounds.origin.y = rt_bounds.size.h / 2 + 2;
     yr_bounds.origin.y = rt_bounds.size.h - rt_bounds.size.h / 3;
-    bt_bounds.origin.y = rt_bounds.size.h / 2 - 1;
-    bt_bounds.size.h   = 8;
+    bt_bounds.size.h   = 2;
 
     init_text(&state.z, tz_bounds, state.z_fn);
     init_text(&state.t, tm_bounds, state.t_fn);
@@ -47,6 +46,7 @@ init (void) {
 
     state.b = layer_create(bt_bounds);
     layer_set_update_proc(state.b, batt_bar_update);
+    layer_add_child(window_get_root_layer(state.w), state.b);
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
     battery_state_service_subscribe(batt_update);
@@ -100,7 +100,10 @@ batt_update (BatteryChargeState batt_state) {
 void
 batt_bar_update (Layer * l, GContext * ctx) {
 
-    graphics_fill_rect(ctx, layer_get_bounds(l), 0, GCornerNone);
+    graphics_context_set_fill_color(ctx, GColorWhite);
+    GRect b = layer_get_bounds(l);
+    b.size.w = (state.btlv / 100.0) * 140;
+    graphics_fill_rect(ctx, b, 0, GCornerNone);
 }
 
 // vim: set ts=4 sw=4 et:
