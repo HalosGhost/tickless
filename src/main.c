@@ -35,7 +35,7 @@ init (void) {
     tz_bounds = tm_bounds = dt_bounds = yr_bounds = bt_bounds = rt_bounds;
     tz_bounds.origin.y = rt_bounds.size.h / 8;
     tm_bounds.origin.y = rt_bounds.size.h / 4;
-    dt_bounds.origin.y = bt_bounds.origin.y = rt_bounds.size.h / 2 + 2;
+    dt_bounds.origin.y = bt_bounds.origin.y = rt_bounds.size.h / 2;
     yr_bounds.origin.y = rt_bounds.size.h - rt_bounds.size.h / 3;
     bt_bounds.size.h   = 2;
 
@@ -102,7 +102,7 @@ batt_bar_update (Layer * l, GContext * ctx) {
 
     graphics_context_set_fill_color(ctx, GColorWhite);
     GRect b = layer_get_bounds(l);
-    b.size.w = (state.btlv / 100.0) * 140;
+    b.size.w = (state.btlv / 100.0) * PBL_DISPLAY_WIDTH;
     graphics_fill_rect(ctx, b, 0, GCornerNone);
 }
 

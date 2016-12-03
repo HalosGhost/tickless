@@ -21,6 +21,9 @@ static char str_buffer [18] = "";
 static char tm_fmt [] = "%H.%M|%a %d %b";
 
 #define toGColor8(c) (GColor8 ){ .argb = (c) }
+#if !defined(PBL_DISPLAY_WIDTH)
+#   define PBL_DISPLAY_WIDTH 140
+#endif
 
 static void
 init (void);
