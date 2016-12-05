@@ -46,7 +46,7 @@ init (void) {
 
     state.b = layer_create(bt_bounds);
     layer_set_update_proc(state.b, batt_bar_update);
-    layer_add_child(window_get_root_layer(state.w), state.b);
+    layer_add_child(rt_layer, state.b);
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
     battery_state_service_subscribe(batt_update);
