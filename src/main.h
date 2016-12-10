@@ -25,6 +25,8 @@ static char tm_fmt [] = "%H.%M|%a %d %b";
 #   define PBL_DISPLAY_WIDTH 140
 #endif
 
+#define BATTBAR 0
+
 static void
 init (void);
 
@@ -37,10 +39,12 @@ cleanup (void);
 static void
 tick (struct tm *, TimeUnits);
 
+#if BATTBAR == 1
 static void
 batt_update (BatteryChargeState);
 
 static void
 batt_bar_update (Layer *, GContext *);
+#endif
 
 // vim: set ts=4 sw=4 et:
