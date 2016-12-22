@@ -25,7 +25,8 @@ static char tm_fmt [] = "%H.%M|%a %d %b";
 #   define PBL_DISPLAY_WIDTH 140
 #endif
 
-#define BATTBAR 0
+// comment this out to disable the battery bar
+#define BATTBAR
 
 static void
 init (void);
@@ -39,7 +40,7 @@ cleanup (void);
 static void
 tick (struct tm *, TimeUnits);
 
-#if BATTBAR == 1
+#if defined(BATTBAR)
 static void
 batt_update (BatteryChargeState);
 

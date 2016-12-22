@@ -44,14 +44,14 @@ init (void) {
     init_text(&state.d, dt_bounds, state.d_fn);
     init_text(&state.y, yr_bounds, state.y_fn);
 
-    if ( BATTBAR ) {
+    #if defined(BATTBAR)
         state.b = layer_create(bt_bounds);
         layer_set_update_proc(state.b, batt_bar_update);
         layer_add_child(rt_layer, state.b);
 
         battery_state_service_subscribe(batt_update);
         layer_mark_dirty(state.b);
-    }
+    #endif
 
     tick_timer_service_subscribe(MINUTE_UNIT, tick);
     tm_fmt[1] += !clock_is_24h_style();
@@ -72,10 +72,10 @@ void
 cleanup (void) {
 
     tick_timer_service_unsubscribe();
-    if ( BATTBAR ) {
+    #if defined(BATTBAR)
         battery_state_service_unsubscribe();
         layer_destroy(state.b);
-    }
+    #endif
     text_layer_destroy(state.z);
     text_layer_destroy(state.t);
     text_layer_destroy(state.d);
@@ -94,7 +94,7 @@ tick (struct tm * ticks, TimeUnits deltat) {
     text_layer_set_text(state.d, str_buffer+6);
 }
 
-#if BATTBAR == 1
+#if defined(BATTBAR)
 void
 batt_update (BatteryChargeState batt_state) {
 
